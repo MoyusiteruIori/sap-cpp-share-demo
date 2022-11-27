@@ -29,12 +29,7 @@ namespace my {
                 }
             }
             catch(...) {
-                for (size_t i = 0; i < this->m_size; ++i) {
-                    this->m_data[i].~T();
-                }
-                if (this->m_data) {
-                    ::operator delete(this->m_data);
-                }
+                this->destruct();
                 throw;
             }
         }
@@ -47,12 +42,7 @@ namespace my {
         }
 
         ~vector() {
-            for (size_t i = 0; i < this->m_size; ++i) {
-                this->m_data[i].~T();
-            }
-            if (this->m_data) {
-                ::operator delete(this->m_data);
-            }
+            this->destruct();
         }
 
         template<typename... Ts>
